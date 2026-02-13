@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String?
+  name          String?
+  username      String    @unique
+  createdAt     DateTime  @default(now())
+  emailVerified DateTime?
+
+  accounts           Account[]
+  sessions           Session[]
+  resetTokens        PasswordResetToken[]
+  verificationTokens VerificationToken[]
+  collection         CollectionEntry[]
+  wishlist           WishlistEntry[]
+  loadouts           Loadout[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  id      String   @id @default(cuid())
+  token   String   @unique
+  userId  String
+  expires DateTime
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expires   DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Skin {
+  id       String @id
+  name     String
+  cost     Int
+  tier     String
+  weapon   String
+  chromas  Json
+  levels   Json?
+  videoUrl String?
+  imageUrl String?
+
+  collectionEntries CollectionEntry[]
+  wishlistEntries   WishlistEntry[]
+  loadoutEntries    LoadoutEntry[]
+}
+
+model CollectionEntry {
+  id     String @id @default(cuid())
+  userId String
+  skinId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skin Skin @relation(fields: [skinId], references: [id])
+
+  @@unique([userId, skinId])
+}
+
+model WishlistEntry {
+  id     String @id @default(cuid())
+  userId String
+  skinId String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skin Skin @relation(fields: [skinId], references: [id])
+
+  @@unique([userId, skinId])
+}
+
+model Loadout {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  icon      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  entries LoadoutEntry[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model LoadoutEntry {
+  id        String  @id @default(cuid())
+  loadoutId String
+  weapon    String
+  skinId    String?
+
+  loadout Loadout @relation(fields: [loadoutId], references: [id], onDelete: Cascade)
+  skin    Skin?   @relation(fields: [skinId], references: [id])
+
+  @@unique([loadoutId, weapon])
+}
+

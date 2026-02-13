@@ -1,0 +1,38 @@
+name: Sync Valorant Skins
+
+# Runs daily at midnight UTC
+# Alternative to Vercel Cron for self-hosted or non-Vercel deployments
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Daily at 00:00 UTC
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  sync-skins:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Trigger Skin Sync
+        run: |
+          response=$(curl -X POST ${{ secrets.APP_URL }}/api/sync/skins \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            -H "Content-Type: application/json" \
+            -w "\n%{http_code}" \
+            -s)
+          
+          http_code=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | sed '$d')
+          
+          echo "HTTP Status: $http_code"
+          echo "Response: $body"
+          
+          if [ "$http_code" -ne 200 ]; then
+            echo "❌ Skin sync failed with status $http_code"
+            exit 1
+          fi
+          
+          echo "✅ Skin sync completed successfully"
+
+      - name: Notify on failure
+        if: failure()
+        run: echo "⚠️ Skin sync workflow failed. Check the logs above."
