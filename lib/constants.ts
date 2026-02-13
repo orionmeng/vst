@@ -51,6 +51,7 @@ export type Skin = {
   cost: number;
   tier: string;
   chromas: JsonValue;
+  levels: JsonValue;
   videoUrl: string | null;
 };
 
