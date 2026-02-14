@@ -8,6 +8,9 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
+// Force dynamic rendering for API route
+export const dynamic = 'force-dynamic';
+
 /**
  * GET /api/skins/standard
  * Retrieves default skin for each weapon type

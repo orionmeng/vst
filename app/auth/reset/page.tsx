@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import AuthInput from "@/app/components/AuthInput";
 
-export default function ResetPage() {
+export const dynamic = 'force-dynamic';
+
+function ResetPageContent() {
   const search = useSearchParams();
   const router = useRouter();
   const token = search.get("token");
@@ -76,5 +78,21 @@ export default function ResetPage() {
         <p className="pt-4 text-sm text-gray-300">{message}</p>
       )}
     </div>
+  );
+}
+
+export default function ResetPage() {
+  return (
+    <Suspense fallback={
+      <div className="max-w-md mx-auto px-6 py-16">
+        <div className="animate-pulse space-y-4">
+          <div className="h-8 bg-neutral-800 rounded w-3/4" />
+          <div className="h-12 bg-neutral-800 rounded" />
+          <div className="h-12 bg-neutral-800 rounded" />
+        </div>
+      </div>
+    }>
+      <ResetPageContent />
+    </Suspense>
   );
 }

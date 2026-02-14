@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-export default function VerifyPage() {
+export const dynamic = 'force-dynamic';
+
+function VerifyPageContent() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
@@ -81,5 +83,20 @@ export default function VerifyPage() {
         </>
       )}
     </div>
+  );
+}
+
+export default function VerifyPage() {
+  return (
+    <Suspense fallback={
+      <div className="max-w-md mx-auto px-6 py-16 text-center">
+        <div className="animate-pulse space-y-4">
+          <div className="h-16 w-16 bg-neutral-800 rounded-full mx-auto" />
+          <div className="h-6 bg-neutral-800 rounded w-2/3 mx-auto" />
+        </div>
+      </div>
+    }>
+      <VerifyPageContent />
+    </Suspense>
   );
 }
