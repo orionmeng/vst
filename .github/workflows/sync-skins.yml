@@ -27,11 +27,11 @@ jobs:
           echo "Response: $body"
           
           if [ "$http_code" -ne 200 ]; then
-            echo "❌ Skin sync failed with status $http_code"
+            echo "Skin sync failed with status $http_code"
             exit 1
           fi
           
-          echo "✅ Skin sync completed successfully"
+          echo "Skin sync completed successfully"
 
       - name: Notify on failure
         if: failure()
