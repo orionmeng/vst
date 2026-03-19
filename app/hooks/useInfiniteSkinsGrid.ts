@@ -1,11 +1,3 @@
-/**
- * Infinite Scrolling Skins Grid Hook
- * 
- * Manages infinite scroll pagination for skins lists.
- * Handles filter changes, intersection observer, and loading states.
- */
-
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { ITEMS_PER_PAGE, Skin } from "@/lib/constants";
@@ -14,11 +6,6 @@ interface UseInfiniteSkinsGridOptions {
   apiEndpoint: string;
 }
 
-/**
- * Custom hook for infinite scroll skins loading
- * Resets pagination when filters change
- * Uses Intersection Observer for scroll detection
- */
 export function useInfiniteSkinsGrid({ apiEndpoint }: UseInfiniteSkinsGridOptions) {
   const searchParams = useSearchParams();
   const weapon = searchParams.get("weapon");

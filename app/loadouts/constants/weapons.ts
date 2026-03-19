@@ -1,15 +1,3 @@
-/**
- * Weapon Display Configuration
- * 
- * Defines weapon groupings and scaling for loadout editor.
- * Organized by weapon categories with custom scale values.
- */
-
-/**
- * Weapon groups with display scaling
- * Each group contains weapons with similar sizes/types
- * Scale values adjust image size for visual consistency
- */
 export const WEAPON_GROUPS = [
   {
     label: "SIDEARMS",

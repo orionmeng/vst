@@ -1,9 +1,3 @@
-/**
- * Change Password API Route
- * 
- * Allows authenticated users to change their password
- */
-
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -23,7 +17,6 @@ export async function POST(req: Request) {
 
     const { currentPassword, newPassword } = await req.json();
 
-    // Validate input
     if (!currentPassword || !newPassword) {
       return NextResponse.json(
         { error: "Current password and new password are required" },
@@ -45,7 +38,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Get current user
     const user = await prisma.user.findUnique({
       where: { id: session.user.id },
     });
@@ -57,7 +49,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Verify current password
     const isValidPassword = await bcrypt.compare(currentPassword, user.password);
     if (!isValidPassword) {
       return NextResponse.json(
@@ -66,19 +57,12 @@ export async function POST(req: Request) {
       );
     }
 
-    // Hash new password
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    console.log("Updating password for user:", user.id);
-    console.log("New hash starts with:", hashedPassword.substring(0, 20));
-
-    // Update password
     const updatedUser = await prisma.user.update({
       where: { id: user.id },
       data: { password: hashedPassword },
     });
-
-    console.log("Password updated. Stored hash starts with:", updatedUser.password?.substring(0, 20));
 
     return NextResponse.json({
       message: "Password updated successfully",

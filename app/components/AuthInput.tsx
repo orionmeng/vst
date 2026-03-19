@@ -1,23 +1,9 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
-/**
- * Styled Auth Input Component
- * 
- * Pre-styled input field for authentication forms.
- * Extends standard HTML input with consistent styling.
- */
-
 "use client";
 
 import { InputHTMLAttributes } from "react";
 
-interface AuthInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  // No additional props needed, just extend the standard input props
-}
+interface AuthInputProps extends InputHTMLAttributes<HTMLInputElement> {}
 
-/**
- * Styled input component for auth forms
- * Includes focus states and dark theme styling
- */
 export default function AuthInput({ className = "", ...props }: AuthInputProps) {
   return (
     <input

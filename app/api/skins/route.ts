@@ -1,25 +1,8 @@
-/**
- * Skins Catalog API Route
- * 
- * Retrieves skins with filtering, search, and pagination.
- * For authenticated users, includes collection/wishlist status.
- */
-
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { prisma } from "@/lib/prisma";
 import { authOptions } from "@/lib/auth";
 
-/**
- * GET /api/skins
- * Retrieves paginated skins with optional filtering
- * 
- * @param searchParams.weapon - Filter by weapon type
- * @param searchParams.search - Search by skin name (case-insensitive)
- * @param searchParams.page - Page number (default: 1)
- * @param searchParams.limit - Items per page (default: 20)
- * @returns Array of skins with collection/wishlist flags if authenticated
- */
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const weapon = searchParams.get("weapon");
@@ -30,7 +13,6 @@ export async function GET(req: Request) {
 
   const skip = (page - 1) * limit;
 
-  // Fetch skins with filters
   const skins = await prisma.skin.findMany({
     where: {
       AND: [

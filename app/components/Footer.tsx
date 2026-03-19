@@ -1,12 +1,3 @@
-/**
- * Application Footer Component
- * 
- * Displays copyright and technology credits.
- */
-
-/**
- * Simple footer with copyright and tech stack links
- */
 export default function Footer() {
   return (
     <footer className="bg-neutral-800 border-t border-neutral-700 text-gray-400 text-sm mt-0">

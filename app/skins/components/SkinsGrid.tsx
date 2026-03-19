@@ -1,19 +1,8 @@
-/**
- * Skins Grid Component
- * 
- * Infinite scrolling grid of all skins.
- * Uses useInfiniteSkinsGrid hook for pagination.
- */
-
 "use client";
 
 import SkinCard from "./SkinCard";
 import { useInfiniteSkinsGrid } from "@/app/hooks/useInfiniteSkinsGrid";
 
-/**
- * Main skins grid with infinite scroll
- * Displays all skins from the catalog
- */
 export default function SkinsGrid() {
   const { skins, isLoading, observerTarget } = useInfiniteSkinsGrid({
     apiEndpoint: "/api/skins",

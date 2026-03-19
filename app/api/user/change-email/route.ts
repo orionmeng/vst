@@ -1,10 +1,3 @@
-/**
- * Change Email API Route
- * 
- * Allows authenticated users to change their email address
- * Requires email verification after change
- */
-
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -25,7 +18,6 @@ export async function POST(req: Request) {
 
     const { newEmail, password } = await req.json();
 
-    // Validate input
     if (!newEmail || !password) {
       return NextResponse.json(
         { error: "New email and password are required" },
@@ -40,7 +32,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Get current user
     const user = await prisma.user.findUnique({
       where: { id: session.user.id },
     });
@@ -52,7 +43,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Verify password
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
       return NextResponse.json(
@@ -61,7 +51,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check if new email is already in use
     const existingUser = await prisma.user.findUnique({
       where: { email: newEmail },
     });
@@ -73,7 +62,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Update email and reset email verification
     await prisma.user.update({
       where: { id: user.id },
       data: {

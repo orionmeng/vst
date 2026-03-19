@@ -1,10 +1,3 @@
-/**
- * Database Seed Script
- * 
- * Populates database with Valorant skins from official API.
- * Run with: npx prisma db seed
- */
-
 import { PrismaClient, Prisma } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -34,10 +27,6 @@ type SkinResponse = {
   }[];
 };
 
-/**
- * Main seed function
- * Fetches weapons and skins from Valorant API and inserts into database
- */
 async function main() {
   console.log("Fetching weapons...");
 

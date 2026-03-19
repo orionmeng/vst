@@ -1,12 +1,3 @@
-/**
- * Skin Sync API Endpoint
- * 
- * Automatically syncs skins from Valorant API to database.
- * Protected by CRON_SECRET environment variable.
- * 
- * POST /api/sync/skins
- */
-
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient, Prisma } from "@prisma/client";
 
@@ -39,7 +30,6 @@ type SkinResponse = {
 
 export async function POST(req: NextRequest) {
   try {
-    // Verify authorization
     const authHeader = req.headers.get("authorization");
     const cronSecret = process.env.CRON_SECRET;
 
@@ -59,9 +49,7 @@ export async function POST(req: NextRequest) {
     }
 
     const startTime = Date.now();
-    console.log("Starting skin sync...");
 
-    // Fetch weapons to build skin-to-weapon mapping
     const weaponsRes = await fetch("https://valorant-api.com/v1/weapons");
     if (!weaponsRes.ok) {
       throw new Error(`Failed to fetch weapons: ${weaponsRes.statusText}`);
@@ -76,7 +64,6 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Fetch all skins
     const skinsRes = await fetch("https://valorant-api.com/v1/weapons/skins");
     if (!skinsRes.ok) {
       throw new Error(`Failed to fetch skins: ${skinsRes.statusText}`);
@@ -89,7 +76,6 @@ export async function POST(req: NextRequest) {
     let skippedCount = 0;
 
     for (const skin of skinsJson.data) {
-      // Skip invalid skins
       if (!skin.displayName || !skin.chromas.length) {
         skippedCount++;
         continue;
@@ -107,7 +93,6 @@ export async function POST(req: NextRequest) {
         continue;
       }
 
-      // Check if skin exists
       const existingSkin = await prisma.skin.findUnique({
         where: { id: skin.uuid },
       });
@@ -156,8 +141,6 @@ export async function POST(req: NextRequest) {
       },
       timestamp: new Date().toISOString(),
     };
-
-    console.log("Skin sync completed:", result.stats);
 
     return NextResponse.json(result);
   } catch (error) {

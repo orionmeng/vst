@@ -1,16 +1,6 @@
-/**
- * Test Email Sender
- * 
- * Development utility to test email functionality.
- * Run with: npx tsx scripts/send-test-email.ts
- */
-
 import nodemailer from "nodemailer";
 import { createTestMailer } from "../lib/mailer.ts";
 
-/**
- * Sends test email using Ethereal credentials
- */
 async function main() {
   const { transporter } = await createTestMailer();
 

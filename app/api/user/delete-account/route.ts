@@ -1,10 +1,3 @@
-/**
- * Delete Account API Route
- * 
- * Allows authenticated users to permanently delete their account
- * This action is irreversible and removes all user data
- */
-
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -24,7 +17,6 @@ export async function POST(req: Request) {
 
     const { password, confirmation } = await req.json();
 
-    // Validate input
     if (!password || !confirmation) {
       return NextResponse.json(
         { error: "Password and confirmation are required" },
@@ -39,7 +31,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Get current user
     const user = await prisma.user.findUnique({
       where: { id: session.user.id },
     });

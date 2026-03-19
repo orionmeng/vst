@@ -1,25 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/**
- * Resend Verification Email API Route
- * 
- * Generates new verification token and resends verification email.
- * Only sends if user exists and email is not already verified.
- * Always returns success to prevent user enumeration.
- */
-
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
 import { createTestMailer } from "@/lib/mailer";
 
-/**
- * POST /api/auth/resend-verification
- * Resends verification email for unverified accounts
- * 
- * @param req.body.email - User's email or username
- * @returns 200 OK always (to prevent user enumeration)
- */
 export async function POST(req: Request) {
   try {
     const { email } = await req.json();

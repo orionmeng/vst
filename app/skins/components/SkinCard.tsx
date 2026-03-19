@@ -1,10 +1,3 @@
-/**
- * Skin Card Component
- * 
- * Displays skin preview in grid layouts.
- * Links to detailed skin page on click.
- */
-
 /* eslint-disable @next/next/no-img-element */
 import { Skin } from "@prisma/client";
 import Link from "next/link";
@@ -13,10 +6,6 @@ interface SkinCardProps {
   skin: Skin;
 }
 
-/**
- * Clickable card showing skin image and basic info
- * Hover effect highlights border in red
- */
 export default function SkinCard({ skin }: SkinCardProps) {
   return (
     <Link

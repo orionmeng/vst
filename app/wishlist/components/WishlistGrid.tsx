@@ -1,19 +1,8 @@
-/**
- * Wishlist Grid Component
- * 
- * Infinite scrolling grid of user's wishlisted skins.
- * Uses useInfiniteSkinsGrid hook with /api/wishlist endpoint.
- */
-
 "use client";
 
 import SkinCard from "@/app/skins/components/SkinCard";
 import { useInfiniteSkinsGrid } from "@/app/hooks/useInfiniteSkinsGrid";
 
-/**
- * User wishlist grid with infinite scroll
- * Shows skins the user wants to buy
- */
 export default function WishlistGrid() {
   const { skins, isLoading, observerTarget } = useInfiniteSkinsGrid({
     apiEndpoint: "/api/wishlist",

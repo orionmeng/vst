@@ -1,23 +1,9 @@
-/**
- * Individual Loadout API Routes
- * 
- * Manages operations on a specific loadout (GET, DELETE, PUT).
- * All operations enforce ownership checks.
- */
-
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-/**
- * GET /api/loadouts/[id]
- * Retrieves a specific loadout with all entries
- * 
- * @param params.id - Loadout UUID
- * @returns Loadout object with nested skin entries
- */
 export async function GET(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -75,13 +61,6 @@ export async function GET(
   }
 }
 
-/**
- * DELETE /api/loadouts/[id]
- * Deletes a loadout and its entries
- * 
- * @param params.id - Loadout UUID
- * @returns Success confirmation
- */
 export async function DELETE(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -98,7 +77,6 @@ export async function DELETE(
 
     const { id } = await params;
 
-    // Verify loadout exists
     const loadout = await prisma.loadout.findUnique({
       where: { id },
     });
@@ -123,7 +101,6 @@ export async function DELETE(
       where: { loadoutId: id },
     });
 
-    // Delete the loadout itself
     await prisma.loadout.delete({
       where: { id },
     });
@@ -136,17 +113,8 @@ export async function DELETE(
       { status: 500 }
     );
   }
-}
-/**
- * PUT /api/loadouts/[id]
- * Updates a loadout's name, icon, and weapon assignments
- * 
- * @param params.id - Loadout UUID
- * @param req.body.name - New loadout name (required, max 26 chars)
- * @param req.body.icon - New icon identifier
- * @param req.body.entries - New weapon -> skin ID mappings
- * @returns Updated loadout with entries
- */export async function PUT(
+})
+export async function PUT(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -166,7 +134,6 @@ export async function DELETE(
     entries: Record<string, string | null>;
   };
 
-  // Verify loadout exists
   const loadout = await prisma.loadout.findUnique({
     where: { id },
   });
@@ -178,7 +145,6 @@ export async function DELETE(
     );
   }
 
-  // Verify ownership
   if (loadout.userId !== session.user.id) {
     return NextResponse.json(
       { error: "Forbidden" },
@@ -186,7 +152,6 @@ export async function DELETE(
     );
   }
 
-  // Validate new name
   if (!name.trim()) {
     return NextResponse.json(
       { error: "Loadout name is required" },
@@ -201,12 +166,10 @@ export async function DELETE(
     );
   }
 
-  // Delete existing entries
   await prisma.loadoutEntry.deleteMany({
     where: { loadoutId: id },
   });
 
-  // Update loadout with new entries
   const updated = await prisma.loadout.update({
     where: { id },
     data: {

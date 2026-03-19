@@ -1,22 +1,9 @@
-/**
- * User Loadouts API Routes
- * 
- * Manages user's weapon loadout presets.
- * Each loadout contains skin assignments for multiple weapons.
- */
-
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-/**
- * GET /api/loadouts
- * Retrieves all loadouts for authenticated user
- * 
- * @returns Array of loadouts with nested skin entries
- */
 export async function GET() {
   const session = await getServerSession(authOptions);
 
@@ -52,15 +39,6 @@ export async function GET() {
   return NextResponse.json(loadouts);
 }
 
-/**
- * POST /api/loadouts
- * Creates a new loadout for authenticated user
- * 
- * @param req.body.name - Loadout name (required, max 26 chars)
- * @param req.body.icon - Optional icon identifier
- * @param req.body.entries - Object mapping weapon names to skin IDs
- * @returns Created loadout with entries
- */
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
 
@@ -77,7 +55,6 @@ export async function POST(req: Request) {
     entries: Record<string, string | null>;
   };
 
-  // Validate loadout name
   if (!name.trim()) {
     return NextResponse.json(
       { error: "Loadout name is required" },

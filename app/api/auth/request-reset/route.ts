@@ -1,22 +1,8 @@
-/**
- * Password Reset Request API Route
- * 
- * Generates password reset token and sends reset email.
- * Always returns success to prevent user enumeration.
- */
-
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
 
-/**
- * POST /api/auth/request-reset
- * Initiates password reset flow by sending reset email
- * 
- * @param req.body.email - User's email address
- * @returns 200 OK always (to prevent user enumeration)
- */
 export async function POST(req: Request) {
   try {
     const { email } = await req.json();
@@ -28,7 +14,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: true });
     }
 
-    // Generate secure random reset token (256 bits)
     const token = crypto.randomBytes(32).toString("hex");
     const expires = new Date(Date.now() + 1000 * 60 * 60); // 1 hour expiry
 

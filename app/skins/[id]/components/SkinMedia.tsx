@@ -1,10 +1,3 @@
-/**
- * Skin Media Display Component
- * 
- * Displays skin image, video, and chroma variants with left column controls.
- * Allows switching between video levels and chroma selection.
- */
-
 "use client";
 
 /* eslint-disable @next/next/no-img-element */
@@ -32,10 +25,6 @@ interface SkinMediaProps {
   isAuthenticated: boolean;
 }
 
-/**
- * Interactive media gallery for skin preview
- * Manages video/image toggle and level/chroma selection with left sidebar
- */
 export default function SkinMedia({
   imageUrl,
   videoUrl,

@@ -1,23 +1,9 @@
-/**
- * Add Skin to Wishlist API Route
- * 
- * Adds a skin to user's wishlist and removes it from collection
- * if it exists there (enforces mutual exclusivity).
- */
-
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 
-/**
- * POST /api/wishlist/add
- * Adds skin to wishlist and removes from collection
- * 
- * @param req.body.skinId - UUID of skin to add
- * @returns 200 OK on success (even if already exists)
- */
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
 
@@ -40,7 +26,6 @@ export async function POST(req: Request) {
       },
     });
 
-    // Add to wishlist
     await prisma.wishlistEntry.create({
       data: {
         userId: session.user.id,
@@ -48,7 +33,6 @@ export async function POST(req: Request) {
       },
     });
 
-    // Revalidate affected pages
     revalidatePath("/collection");
     revalidatePath("/wishlist");
     revalidatePath(`/skins/${skinId}`);

@@ -1,19 +1,8 @@
-/**
- * Collection Grid Component
- * 
- * Infinite scrolling grid of user's collected skins.
- * Uses useInfiniteSkinsGrid hook with /api/collection endpoint.
- */
-
 "use client";
 
 import SkinCard from "@/app/skins/components/SkinCard";
 import { useInfiniteSkinsGrid } from "@/app/hooks/useInfiniteSkinsGrid";
 
-/**
- * User collection grid with infinite scroll
- * Shows skins the user owns
- */
 export default function CollectionGrid() {
   const { skins, isLoading, observerTarget } = useInfiniteSkinsGrid({
     apiEndpoint: "/api/collection",

@@ -1,10 +1,3 @@
-/**
- * Download Preview Modal Component
- * 
- * Shows loadout image preview before downloading.
- * Allows user to confirm or cancel download.
- */
-
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -16,10 +9,6 @@ interface DownloadModalProps {
   loadoutName: string;
 }
 
-/**
- * Modal for previewing loadout before download
- * Shows generated image and download confirmation
- */
 export default function DownloadModal({
   isOpen,
   onClose,

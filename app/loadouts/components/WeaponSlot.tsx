@@ -1,10 +1,3 @@
-/**
- * Weapon Slot Component
- * 
- * Displays weapon skin selection in loadout editor.
- * Clickable to open skin selection modal.
- */
-
 /* eslint-disable @next/next/no-img-element */
 
 type Props = {
@@ -13,10 +6,6 @@ type Props = {
   onClick: () => void;
 };
 
-/**
- * Interactive weapon slot button
- * Shows selected skin or "Standard" placeholder
- */
 export default function WeaponSlot({ weapon, imageUrl, onClick }: Props) {
   return (
     <button

@@ -1,15 +1,5 @@
-/**
- * Ethereal Email Account Generator
- * 
- * Development utility to generate test email credentials.
- * Run with: npx tsx scripts/create-ethereal.ts
- */
-
 import nodemailer from "nodemailer";
 
-/**
- * Creates and displays Ethereal test account credentials
- */
 async function createEthereal() {
   const testAccount = await nodemailer.createTestAccount();
 

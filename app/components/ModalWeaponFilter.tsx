@@ -1,10 +1,3 @@
-/**
- * Modal Weapon Filter Component
- * 
- * Horizontal weapon filter buttons for skin selection modal.
- * Includes "All" option to clear weapon filter.
- */
-
 "use client";
 
 import clsx from "clsx";
@@ -15,10 +8,6 @@ interface ModalWeaponFilterProps {
   onSelectWeapon: (weapon: string | undefined) => void;
 }
 
-/**
- * Weapon filter buttons for modal
- * Allows filtering skins by weapon type
- */
 export default function ModalWeaponFilter({
   weapons,
   selectedWeapon,

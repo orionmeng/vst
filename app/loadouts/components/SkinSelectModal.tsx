@@ -1,10 +1,3 @@
-/**
- * Skin Selection Modal Component
- * 
- * Full-screen modal for selecting skins in loadout editor.
- * Features infinite scroll, search, weapon filter, and collection/wishlist filters.
- */
-
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -22,10 +15,6 @@ interface SkinSelectModalProps {
   currentIconUrl?: string | null;
 }
 
-/**
- * Modal for skin selection with infinite scroll and filtering
- * Supports ALL weapons mode or single weapon mode
- */
 export default function SkinSelectModal({
   weapon,
   skins: initialSkins,
@@ -47,7 +36,6 @@ export default function SkinSelectModal({
   const isInitialMount = useRef(true);
 
   // Fetch skins with pagination for both ALL and specific weapon modes
-  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     const weaponChanged = prevWeaponRef.current !== selectedWeapon;
     const searchChanged = prevSearchRef.current !== searchQuery;

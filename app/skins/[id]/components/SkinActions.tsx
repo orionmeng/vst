@@ -1,11 +1,3 @@
-/**
- * Skin Action Buttons Component
- * 
- * Manages collection and wishlist toggle buttons for a skin.
- * Enforces mutual exclusivity - skin can't be in both lists.
- * Handles optimistic updates and error rollback.
- */
-
 "use client";
 
 import { useState } from "react";
@@ -18,11 +10,6 @@ interface SkinActionsProps {
   isAuthenticated: boolean;
 }
 
-/**
- * Renders collection and wishlist action buttons
- * Prevents concurrent operations with loading state
- * Reverts state on API error
- */
 export default function SkinActions({
   skinId,
   initialWishlisted,
@@ -34,10 +21,6 @@ export default function SkinActions({
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  /**
-   * Toggles wishlist status for this skin
-   * Automatically removes from collection if adding to wishlist
-   */
   async function toggleWishlist() {
     if (!isAuthenticated || loading) return;
 
@@ -70,10 +53,6 @@ export default function SkinActions({
     }
   }
 
-  /**
-   * Toggles collection status for this skin
-   * Automatically removes from wishlist if adding to collection
-   */
   async function toggleCollection() {
     if (!isAuthenticated || loading) return;
 

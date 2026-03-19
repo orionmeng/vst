@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useState } from "react";
@@ -10,20 +9,17 @@ export default function SettingsPage() {
   const { data: session, update } = useSession();
   const router = useRouter();
 
-  // Change Display Name State
   const [newName, setNewName] = useState("");
   const [nameError, setNameError] = useState<string | null>(null);
   const [nameSuccess, setNameSuccess] = useState<string | null>(null);
   const [nameLoading, setNameLoading] = useState(false);
 
-  // Change Email State
   const [newEmail, setNewEmail] = useState("");
   const [emailPassword, setEmailPassword] = useState("");
   const [emailError, setEmailError] = useState<string | null>(null);
   const [emailSuccess, setEmailSuccess] = useState<string | null>(null);
   const [emailLoading, setEmailLoading] = useState(false);
 
-  // Change Password State
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -31,13 +27,11 @@ export default function SettingsPage() {
   const [passwordSuccess, setPasswordSuccess] = useState<string | null>(null);
   const [passwordLoading, setPasswordLoading] = useState(false);
 
-  // Delete Account State
   const [deletePassword, setDeletePassword] = useState("");
   const [deleteConfirmation, setDeleteConfirmation] = useState("");
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
-  // Change Display Name Handler
   async function handleChangeName(e: React.FormEvent) {
     e.preventDefault();
     setNameError(null);
@@ -58,10 +52,7 @@ export default function SettingsPage() {
       } else {
         setNameSuccess(data.message);
         setNewName("");
-        // Update the session to reflect the new name
-        console.log("Updating session...");
         const updatedSession = await update();
-        console.log("Session updated:", updatedSession);
       }
     } catch (error) {
       console.error("Error changing name:", error);
@@ -71,7 +62,6 @@ export default function SettingsPage() {
     }
   }
 
-  // Change Email Handler
   async function handleChangeEmail(e: React.FormEvent) {
     e.preventDefault();
     setEmailError(null);
@@ -93,7 +83,6 @@ export default function SettingsPage() {
         setEmailSuccess(data.message);
         setNewEmail("");
         setEmailPassword("");
-        // Sign out user since email verification is required
         setTimeout(() => {
           signOut({ callbackUrl: "/auth/signin" });
         }, 2000);
@@ -105,7 +94,6 @@ export default function SettingsPage() {
     }
   }
 
-  // Change Password Handler
   async function handleChangePassword(e: React.FormEvent) {
     e.preventDefault();
     setPasswordError(null);
@@ -142,7 +130,6 @@ export default function SettingsPage() {
     }
   }
 
-  // Delete Account Handler
   async function handleDeleteAccount(e: React.FormEvent) {
     e.preventDefault();
     setDeleteError(null);
@@ -163,7 +150,6 @@ export default function SettingsPage() {
       if (!res.ok) {
         setDeleteError(data.error || "Failed to delete account");
       } else {
-        // Sign out and redirect
         signOut({ callbackUrl: "/" });
       }
     } catch (error) {

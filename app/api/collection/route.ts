@@ -1,26 +1,9 @@
-/**
- * User Collection API Routes
- * 
- * Manages user's owned skin collection.
- * Supports filtering, search, and pagination.
- */
-
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-/**
- * GET /api/collection
- * Retrieves user's skin collection with optional filtering
- * 
- * @param searchParams.weapon - Filter by weapon type
- * @param searchParams.search - Search by skin name (case-insensitive)
- * @param searchParams.page - Page number (default: 1)
- * @param searchParams.limit - Items per page (default: 20)
- * @returns Array of skins in user's collection
- */
 export async function GET(req: Request) {
   const session = await getServerSession(authOptions);
 
@@ -39,7 +22,6 @@ export async function GET(req: Request) {
 
   const skip = (page - 1) * limit;
 
-  // Query collection entries with filters and pagination
   const collectionEntries = await prisma.collectionEntry.findMany({
     where: {
       userId: session.user.id,

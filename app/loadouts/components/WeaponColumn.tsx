@@ -1,10 +1,3 @@
-/**
- * Weapon Column Component
- * 
- * Vertical column of weapon slots for loadout display.
- * Maps weapon names to skin images.
- */
-
 import WeaponSlot from "./WeaponSlot";
 import { WeaponName } from "../constants/weapons";
 
@@ -15,10 +8,6 @@ type Props = {
   onSelectWeapon: (weapon: WeaponName) => void;
 };
 
-/**
- * Renders vertical list of weapon slots
- * Used in loadout page display
- */
 export default function WeaponColumn({
   weapons,
   loadout,

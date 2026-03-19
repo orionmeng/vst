@@ -1,11 +1,3 @@
-/**
- * Loadout Card Component
- * 
- * Displays loadout preview with hover actions.
- * Shows loadout icon or first skin, with edit/download/delete controls.
- */
-
-/* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -27,10 +19,6 @@ interface LoadoutCardProps {
   onSetIcon: (loadout: SavedLoadout) => void;
 }
 
-/**
- * Interactive loadout card with hover actions
- * Handles image errors and displays action buttons on hover
- */
 export default function LoadoutCard({ loadout, onDelete, onDownload, onExport, onSetIcon }: LoadoutCardProps) {
   const [showActions, setShowActions] = useState(false);
   const [imageError, setImageError] = useState(false);

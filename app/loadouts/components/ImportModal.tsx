@@ -1,11 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/**
- * Loadout Import Modal Component
- * 
- * Allows users to import loadout configurations from JSON files or text.
- * Validates format and creates new loadout via API.
- */
-
 "use client";
 
 import { useState, useRef } from "react";
@@ -22,10 +14,6 @@ export interface LoadoutImportData {
   entries: Record<string, string | null>;
 }
 
-/**
- * Modal for importing loadout from JSON file or pasted text
- * Validates JSON structure before import
- */
 export default function ImportModal({ isOpen, onClose, onImport }: ImportModalProps) {
   const [importText, setImportText] = useState("");
   const [error, setError] = useState("");

@@ -1,11 +1,3 @@
-/**
- * Weapon Grid Component
- * 
- * 4-column grid layout of all weapons for loadout editor.
- * Each weapon shows selected skin or standard image.
- * Organized by weapon categories (Sidearms, SMGs, etc.).
- */
-
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -22,10 +14,6 @@ interface WeaponGridProps {
   onWeaponClick: (weapon: string) => void;
 }
 
-/**
- * Main weapon grid for loadout editor
- * Used for both editing and screenshot capture
- */
 export default function WeaponGrid({
   loadout,
   standardImages,

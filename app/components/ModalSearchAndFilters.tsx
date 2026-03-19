@@ -1,10 +1,3 @@
-/**
- * Modal Search and Filter Controls
- * 
- * Search input and collection/wishlist filter toggles.
- * Used in skin selection modals for loadout editor.
- */
-
 "use client";
 
 interface ModalSearchAndFiltersProps {
@@ -16,9 +9,6 @@ interface ModalSearchAndFiltersProps {
   onToggleWishlist: () => void;
 }
 
-/**
- * Search bar with collection/wishlist filter buttons
- */
 export default function ModalSearchAndFilters({
   searchQuery,
   onSearchChange,
@@ -29,7 +19,6 @@ export default function ModalSearchAndFilters({
 }: ModalSearchAndFiltersProps) {
   return (
     <>
-      {/* SEARCH BAR */}
       <input
         type="text"
         placeholder="Search skins..."
@@ -38,7 +27,6 @@ export default function ModalSearchAndFilters({
         className="w-full px-3 py-2 rounded bg-neutral-800 border border-neutral-700 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 text-sm"
       />
 
-      {/* FILTER BUTTONS */}
       <div className="flex gap-2">
         <button
           onClick={onToggleCollection}

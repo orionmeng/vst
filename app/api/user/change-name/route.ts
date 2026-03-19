@@ -1,9 +1,3 @@
-/**
- * Change Display Name API Route
- * 
- * Allows authenticated users to change their display name
- */
-
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -22,7 +16,6 @@ export async function POST(req: Request) {
 
     const { newName } = await req.json();
 
-    // Validate input
     if (newName === undefined || newName === null) {
       return NextResponse.json(
         { error: "Display name is required" },
@@ -30,7 +23,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Validate name is not empty or just whitespace
     const trimmedName = newName.trim();
     if (trimmedName.length === 0) {
       return NextResponse.json(
@@ -39,16 +31,10 @@ export async function POST(req: Request) {
       );
     }
 
-    console.log("Updating display name for user:", session.user.id);
-    console.log("New name:", trimmedName);
-
-    // Update display name
     const updatedUser = await prisma.user.update({
       where: { id: session.user.id },
       data: { name: trimmedName },
     });
-
-    console.log("Display name updated successfully:", updatedUser.name);
 
     return NextResponse.json({
       message: "Display name updated successfully",

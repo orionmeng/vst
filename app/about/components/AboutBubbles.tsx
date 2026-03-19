@@ -1,10 +1,3 @@
-/**
- * About Page Bubbles Component
- * 
- * Grid of image bubbles with titles.
- * Supports optional links for clickable bubbles.
- */
-
 "use client";
 
 import Image from "next/image";
@@ -20,10 +13,6 @@ interface AboutBubblesProps {
   bubbles: Bubble[];
 }
 
-/**
- * 3-column grid of image bubbles
- * Hover effect scales images and highlights border
- */
 export default function AboutBubbles({ bubbles }: AboutBubblesProps) {
 
   return (
@@ -34,7 +23,6 @@ export default function AboutBubbles({ bubbles }: AboutBubblesProps) {
         return (
           <Component key={bubble.id} className="group cursor-pointer" {...props}>
             <div className="relative w-full aspect-square bg-neutral-800 rounded-lg overflow-hidden border border-neutral-700 hover:border-red-500 transition">
-            {/* Image */}
             <Image
               src={bubble.image}
               alt={bubble.title}
@@ -45,7 +33,6 @@ export default function AboutBubbles({ bubbles }: AboutBubblesProps) {
               unoptimized
               className="object-cover group-hover:scale-110 transition-transform duration-300"
             />
-            {/* Title strip */}
             <div className="absolute bottom-0 left-0 right-0 bg-gray-700 px-3 py-2">
               <p className="text-sm font-semibold text-white truncate">{bubble.title}</p>
             </div>

@@ -1,10 +1,3 @@
-/**
- * Loadout Editor Header Component
- * 
- * Top bar for loadout editor with name editing and action buttons.
- * Shows Save/Create, Download, and Exit/Cancel buttons.
- */
-
 "use client";
 
 import Link from "next/link";
@@ -24,10 +17,6 @@ interface LoadoutHeaderProps {
   onExport: () => void;
 }
 
-/**
- * Header bar with editable loadout name and action buttons
- * Handles inline name editing with Enter key support
- */
 export default function LoadoutHeader({
   loadoutName,
   isEditingName,

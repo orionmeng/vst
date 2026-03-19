@@ -1,10 +1,3 @@
-/**
- * Loadout Editor Hook
- * 
- * Manages all state and logic for loadout creation/editing.
- * Handles weapon selection, saving, downloading, and unsaved changes warnings.
- */
-
 import { useState, useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import * as htmlToImage from 'html-to-image';
@@ -26,10 +19,6 @@ interface UseLoadoutEditorProps {
   shouldAutoDownload: boolean;
 }
 
-/**
- * Custom hook for loadout editor functionality
- * Manages weapon selection, save/download operations, and unsaved changes tracking
- */
 export function useLoadoutEditor({ loadoutId, isNewLoadout, shouldAutoDownload }: UseLoadoutEditorProps) {
   const { data: session, status } = useSession();
   
@@ -50,7 +39,6 @@ export function useLoadoutEditor({ loadoutId, isNewLoadout, shouldAutoDownload }
   const gridRef = useRef<HTMLDivElement>(null);
   const autoDownloadTriggered = useRef(false);
 
-  // Load standard images on mount
   useEffect(() => {
     fetch("/api/skins/standard")
       .then((res) => res.json())
@@ -88,7 +76,6 @@ export function useLoadoutEditor({ loadoutId, isNewLoadout, shouldAutoDownload }
     };
   }, [hasUnsavedChanges]);
 
-  // Load existing loadout if editing
   useEffect(() => {
     if (isNewLoadout) return;
 
@@ -112,12 +99,10 @@ export function useLoadoutEditor({ loadoutId, isNewLoadout, shouldAutoDownload }
       .finally(() => setPageLoading(false));
   }, [isNewLoadout, loadoutId]);
 
-  // Save to localStorage when loadout changes
   useEffect(() => {
     localStorage.setItem("valorant-loadout", JSON.stringify(loadout));
   }, [loadout]);
 
-  // Load skins for active weapon
   useEffect(() => {
     if (!activeWeapon) return;
 
@@ -257,12 +242,7 @@ export function useLoadoutEditor({ loadoutId, isNewLoadout, shouldAutoDownload }
     setDownloadPreview(null);
   };
 
-  /**
-   * Export loadout as JSON file
-   * Converts current loadout state to exportable format and downloads as .json file
-   */
   const handleExport = () => {
-    // Convert loadout state to exportable format
     const exportData: {
       name: string;
       icon?: string;
@@ -277,12 +257,10 @@ export function useLoadoutEditor({ loadoutId, isNewLoadout, shouldAutoDownload }
       }, {} as Record<string, string>),
     };
 
-    // Only include icon if it exists
     if (loadoutIcon) {
       exportData.icon = loadoutIcon;
     }
 
-    // Create downloadable JSON file
     const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -295,7 +273,6 @@ export function useLoadoutEditor({ loadoutId, isNewLoadout, shouldAutoDownload }
   };
 
   return {
-    // State
     loadout,
     standardImages,
     activeWeapon,
@@ -313,7 +290,6 @@ export function useLoadoutEditor({ loadoutId, isNewLoadout, shouldAutoDownload }
     session,
     status,
     
-    // Actions
     setActiveWeapon,
     setLoadoutName,
     setIsEditingName,

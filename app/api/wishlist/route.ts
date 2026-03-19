@@ -1,25 +1,8 @@
-/**
- * User Wishlist API Routes
- * 
- * Manages user's skin wishlist.
- * Supports filtering, search, and pagination.
- */
-
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-/**
- * GET /api/wishlist
- * Retrieves user's skin wishlist with optional filtering
- * 
- * @param searchParams.weapon - Filter by weapon type
- * @param searchParams.search - Search by skin name (case-insensitive)
- * @param searchParams.page - Page number (default: 1)
- * @param searchParams.limit - Items per page (default: 20)
- * @returns Array of skins in user's wishlist
- */
 export async function GET(req: Request) {
   const session = await getServerSession(authOptions);
 
@@ -38,7 +21,6 @@ export async function GET(req: Request) {
 
   const skip = (page - 1) * limit;
 
-  // Query wishlist entries with filters and pagination
   const wishlistEntries = await prisma.wishlistEntry.findMany({
     where: {
       userId: session.user.id,

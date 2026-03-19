@@ -1,20 +1,9 @@
-/**
- * Weapons Tab Component
- * 
- * Horizontal weapon filter tabs.
- * Updates URL search params when weapon is selected.
- */
-
 "use client";
 
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import clsx from "clsx";
 import { WEAPONS } from "@/lib/constants";
 
-/**
- * Weapon filter tabs
- * Active weapon highlighted in red, synced with URL params
- */
 export default function WeaponsTab() {
   const router = useRouter();
   const pathname = usePathname();

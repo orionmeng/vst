@@ -1,10 +1,3 @@
-/**
- * Skin Filters Component
- * 
- * Search input and weapon tabs for filtering skins.
- * Syncs with URL search params for shareable filtered views.
- */
-
 "use client";
 
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
@@ -15,10 +8,6 @@ interface SkinFiltersProps {
   layout?: "row" | "column";
 }
 
-/**
- * Filter controls for skins pages
- * Includes debounced search and weapon tabs
- */
 export default function SkinFilters({ layout = "row" }: SkinFiltersProps) {
   const router = useRouter();
   const pathname = usePathname();

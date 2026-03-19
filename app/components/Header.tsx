@@ -1,10 +1,3 @@
-/**
- * Application Header Component
- * 
- * Displays navigation menu and authentication controls.
- * Active route is highlighted with animation effects.
- */
-
 "use client";
 
 import Link from "next/link";
@@ -13,15 +6,10 @@ import { useSession, signOut } from "next-auth/react";
 import clsx from "clsx";
 import { Loader2 } from "lucide-react";
 
-/**
- * Main header navigation component with authentication
- * Shows loading spinner during auth check, username when logged in
- */
 export default function Header() {
   const pathname = usePathname();
   const { data: session, status } = useSession();
 
-  // Dynamic link styles based on active route
   const linkClass = (href: string) =>
     clsx(
       "relative transition-all duration-300 ease-out",
