@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Trigger Skin Sync
         run: |
-          response=$(curl -X POST ${{ secrets.APP_URL }}/api/sync/skins \
+          response=$(curl -L -X POST ${{ secrets.APP_URL }}/api/sync/skins \
             -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
             -H "Content-Type: application/json" \
             -w "\n%{http_code}" \
