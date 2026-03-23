@@ -1,6 +1,5 @@
 import { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import EmailProvider from "next-auth/providers/email";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
@@ -36,10 +35,6 @@ export const authOptions: NextAuthOptions = {
             return null;
           }
 
-          if (!user.emailVerified) {
-            throw new Error("EMAIL_NOT_VERIFIED");
-          }
-
           const isValid = await bcrypt.compare(
             credentials.password,
             user.password
@@ -57,11 +52,6 @@ export const authOptions: NextAuthOptions = {
           throw error;
         }
       },
-    }),
-
-    EmailProvider({
-      server: process.env.EMAIL_SERVER!,
-      from: process.env.EMAIL_FROM!,
     }),
   ],
 

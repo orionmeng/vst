@@ -1,9 +1,6 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
-import crypto from "crypto";
-import nodemailer from "nodemailer";
-import { createTestMailer } from "@/lib/mailer";
 
 export async function POST(req: Request) {
   try {
@@ -38,41 +35,14 @@ export async function POST(req: Request) {
 
     const hashed = await bcrypt.hash(password, 10);
 
-    const user = await prisma.user.create({
+    await prisma.user.create({
       data: {
         email: email.trim().toLowerCase(),
         password: hashed,
         name: name.trim(),
         username: username.trim(),
-        emailVerified: null,
+        emailVerified: new Date(),
       },
-    });
-
-    const token = crypto.randomBytes(32).toString("hex");
-    const expires = new Date(Date.now() + 1000 * 60 * 60); // 1 hour expiry
-
-    await prisma.verificationToken.create({
-      data: {
-        token,
-        userId: user.id,
-        expires,
-      },
-    });
-
-    const verifyUrl = `${process.env.NEXTAUTH_URL}/auth/verify?token=${token}`;
-
-    const { transporter } = await createTestMailer();
-
-    const info = await transporter.sendMail({
-      to: email,
-      from: "Valorant Skins <no-reply@valorantskins.dev>",
-      subject: "Verify your Valorant Skin Tracker account",
-      html: `
-        <p>Hey ${name ?? username},</p>
-        <p>Click the link below to verify your email:</p>
-        <p><a href="${verifyUrl}">${verifyUrl}</a></p>
-      `,
-      text: `Verify your account: ${verifyUrl}`,
     });
 
     return NextResponse.json({ ok: true });

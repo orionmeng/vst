@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import AuthInput from "@/app/components/AuthInput";
 
@@ -10,10 +11,12 @@ export default function SignupPage() {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [message, setMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setMessage(null);
+    setLoading(true);
 
     const res = await fetch("/api/auth/signup", {
       method: "POST",
@@ -23,11 +26,26 @@ export default function SignupPage() {
 
     const data = await res.json();
 
-    if (res.ok) {
-      setMessage("Account created! Check your email to verify your account.");
-    } else {
+    if (!res.ok) {
       setMessage(data?.error || "Error creating account.");
+      setLoading(false);
+      return;
     }
+
+    // Auto sign-in after successful signup
+    const signInRes = await signIn("credentials", {
+      identifier: email,
+      password,
+      redirect: false,
+    });
+
+    if (signInRes?.error) {
+      setMessage("Account created! Please sign in.");
+      setLoading(false);
+      return;
+    }
+
+    window.location.href = "/";
   }
 
   return (
@@ -94,9 +112,10 @@ export default function SignupPage() {
 
         <button
           type="submit"
-          className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded w-full cursor-pointer"
+          disabled={loading}
+          className="bg-red-600 hover:bg-red-500 disabled:opacity-50 text-white px-4 py-2 rounded w-full cursor-pointer"
         >
-          Create account
+          {loading ? "Creating account..." : "Create account"}
         </button>
 
         {message && <p className="pt-3 text-sm text-gray-300">{message}</p>}

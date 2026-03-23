@@ -66,12 +66,12 @@ export async function POST(req: Request) {
       where: { id: user.id },
       data: {
         email: newEmail,
-        emailVerified: null, // Require re-verification
+        emailVerified: new Date(),
       },
     });
 
     return NextResponse.json({
-      message: "Email updated successfully. Please verify your new email address.",
+      message: "Email updated successfully.",
     });
   } catch (error) {
     console.error("Change email error:", error);

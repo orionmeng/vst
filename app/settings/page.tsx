@@ -93,10 +93,6 @@ export default function SettingsPage() {
         setEmailSuccess(data.message);
         setNewEmail("");
         setEmailPassword("");
-        // Sign out user since email verification is required
-        setTimeout(() => {
-          signOut({ callbackUrl: "/auth/signin" });
-        }, 2000);
       }
     } catch (error) {
       setEmailError("An error occurred. Please try again.");
