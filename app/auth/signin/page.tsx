@@ -27,7 +27,7 @@ export default function SigninPage() {
 
     if (res?.error) {
       if (res.error === "CredentialsSignin") {
-        setError("Invalid email/username or password.");
+        setError("Invalid username or password.");
       } else {
         setError("Something went wrong. Please try again.");
       }
@@ -44,12 +44,12 @@ export default function SigninPage() {
       <form onSubmit={handleSubmit} className="space-y-4 text-white">
         <div>
           <label htmlFor="identifier" className="block text-sm font-medium mb-2">
-            Email or Username
+            Username
           </label>
           <AuthInput
             id="identifier"
             type="text"
-            placeholder="Enter your email or username"
+            placeholder="Enter your username"
             value={identifier}
             onChange={(e) => setIdentifier(e.target.value)}
             required

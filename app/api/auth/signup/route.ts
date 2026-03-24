@@ -4,14 +4,10 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
   try {
-    const { email, password, name, username } = await req.json();
+    const { password, name, username } = await req.json();
 
-    if (!email || !password || !username || !name) {
+    if (!password || !username || !name) {
       return NextResponse.json({ error: "All fields are required" }, { status: 400 });
-    }
-
-    if (email.trim().length === 0) {
-      return NextResponse.json({ error: "Email cannot be empty" }, { status: 400 });
     }
 
     if (name.trim().length === 0) {
@@ -27,17 +23,17 @@ export async function POST(req: Request) {
     }
 
     const existing = await prisma.user.findFirst({
-      where: { OR: [{ email: email.trim().toLowerCase() }, { username: username.trim() }] }
+      where: { username: username.trim() }
     });
     if (existing) {
-      return NextResponse.json({ error: "Email or username already taken" }, { status: 409 });
+      return NextResponse.json({ error: "Username already taken" }, { status: 409 });
     }
 
     const hashed = await bcrypt.hash(password, 10);
 
     await prisma.user.create({
       data: {
-        email: email.trim().toLowerCase(),
+        email: `${username.trim().toLowerCase()}@placeholder.local`,
         password: hashed,
         name: name.trim(),
         username: username.trim(),

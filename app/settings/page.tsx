@@ -58,7 +58,6 @@ export default function SettingsPage() {
       } else {
         setNameSuccess(data.message);
         setNewName("");
-        // Update the session to reflect the new name
         console.log("Updating session...");
         const updatedSession = await update();
         console.log("Session updated:", updatedSession);
@@ -159,7 +158,6 @@ export default function SettingsPage() {
       if (!res.ok) {
         setDeleteError(data.error || "Failed to delete account");
       } else {
-        // Sign out and redirect
         signOut({ callbackUrl: "/" });
       }
     } catch (error) {
@@ -183,9 +181,9 @@ export default function SettingsPage() {
 
       {/* Top row: Email and Password */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        {/* Change Email Section */}
-        <div className="bg-gray-800 p-6 rounded-lg flex flex-col">
-          <h2 className="text-xl font-semibold mb-4 text-white">Change Email</h2>
+        {/* Change Email Section (disabled until email verification is available) */}
+        <div className="bg-gray-800 p-6 rounded-lg flex flex-col opacity-50 pointer-events-none">
+          <h2 className="text-xl font-semibold mb-4 text-white">Change Email (Currently Disabled)</h2>
           <form onSubmit={handleChangeEmail} className="space-y-4 flex-1 flex flex-col">
             <div>
               <label htmlFor="currentEmail" className="block text-sm font-medium mb-2 text-white">

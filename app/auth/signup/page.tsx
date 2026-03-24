@@ -6,7 +6,6 @@ import Link from "next/link";
 import AuthInput from "@/app/components/AuthInput";
 
 export default function SignupPage() {
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
@@ -21,7 +20,7 @@ export default function SignupPage() {
     const res = await fetch("/api/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, name, username }),
+      body: JSON.stringify({ password, name, username }),
     });
 
     const data = await res.json();
@@ -32,9 +31,8 @@ export default function SignupPage() {
       return;
     }
 
-    // Auto sign-in after successful signup
     const signInRes = await signIn("credentials", {
-      identifier: email,
+      identifier: username,
       password,
       redirect: false,
     });
@@ -77,20 +75,6 @@ export default function SignupPage() {
             placeholder="Choose a username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium mb-2">
-            Email Address
-          </label>
-          <AuthInput
-            id="email"
-            type="email"
-            placeholder="Enter your email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
