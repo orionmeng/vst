@@ -32,26 +32,26 @@ export default function HomePage() {
 
       {/* FEATURES */}
       <section className="grid sm:grid-cols-3 gap-8">
-        <div className="bg-neutral-800 border border-neutral-700 rounded-xl p-6">
+        <Link href="/skins" className="bg-neutral-800 border border-neutral-700 rounded-xl p-6 hover:border-red-500 transition">
           <h3 className="text-white font-semibold text-lg mb-2">Full Skin Database</h3>
           <p className="text-gray-400">
-            Explore all skins sorted by weapon.
+            Explore every weapon skin available in Valorant.
           </p>
-        </div>
+        </Link>
 
-        <div className="bg-neutral-800 border border-neutral-700 rounded-xl p-6">
+        <Link href="/collection" className="bg-neutral-800 border border-neutral-700 rounded-xl p-6 hover:border-red-500 transition">
           <h3 className="text-white font-semibold text-lg mb-2">Personal Collection</h3>
           <p className="text-gray-400">
             Track which skins you own and which skins you want.
           </p>
-        </div>
+        </Link>
 
-        <div className="bg-neutral-800 border border-neutral-700 rounded-xl p-6">
-          <h3 className="text-white font-semibold text-lg mb-2">Loadouts</h3>
+        <Link href="/loadouts" className="bg-neutral-800 border border-neutral-700 rounded-xl p-6 hover:border-red-500 transition">
+          <h3 className="text-white font-semibold text-lg mb-2">Custom Loadouts</h3>
           <p className="text-gray-400">
-            Craft and customize your own loadouts to see how skins look together.
+            Craft, perfect, and share your custom loadouts with others.
           </p>
-        </div>
+        </Link>
       </section>
     </div>
   );

@@ -24,14 +24,15 @@ export default function AboutPage() {
       <section className="mb-12">
         <h2 className="text-2xl font-semibold text-white mb-4">Website Purpose</h2>
         <p className="text-gray-300 leading-relaxed">
-          Valorant Skin Tracker is a personal project designed to help users organize and manage their Valorant skin collection.
-          The site allows users to create custom loadouts, track owned skins, and maintain a wishlist of desired items.
+          Valorant Skin Tracker is a personal project designed for users to organize and manage their Valorant skin collection.
+          Users can use it to explore every skin, track the ones they own, chase the ones they want, and create custom loadouts.
+          The goal of this project is to provide Valorant players with a simple way to share their custom loadouts with others.
         </p>
       </section>
 
       {/* ABOUT ME SECTION */}
       <section>
-        <h2 className="text-2xl font-semibold text-white mb-8">Developer Background</h2>
+        <h2 className="text-2xl font-semibold text-white mb-8">Legendary Developer Background</h2>
         <AboutBubbles bubbles={aboutBubbles} />
       </section>
     </div>
