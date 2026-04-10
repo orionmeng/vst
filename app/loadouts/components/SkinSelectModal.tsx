@@ -188,22 +188,20 @@ export default function SkinSelectModal({
               />
             </div>
 
-            {/* CURRENT ICON */}
-            {weapon === "ALL" && (
-              <div className="flex-shrink-0">
-                <div className="w-36 h-36 rounded-lg border border-neutral-700 bg-neutral-800 flex items-center justify-center overflow-hidden">
-                  {currentIconUrl ? (
-                    <img
-                      src={currentIconUrl}
-                      alt="Current icon"
-                      className="object-contain w-24 h-24"
-                    />
-                  ) : (
-                    <span className="text-sm text-gray-500">None</span>
-                  )}
-                </div>
+            {/* CURRENT SELECTION */}
+            <div className="flex-shrink-0">
+              <div className="w-36 h-36 rounded-lg border border-neutral-700 bg-neutral-800 flex items-center justify-center overflow-hidden">
+                {currentIconUrl ? (
+                  <img
+                    src={currentIconUrl}
+                    alt={weapon === "ALL" ? "Current icon" : "Current skin"}
+                    className="object-contain w-24 h-24"
+                  />
+                ) : (
+                  <span className="text-sm text-gray-500">None</span>
+                )}
               </div>
-            )}
+            </div>
           </div>
         </div>
 
