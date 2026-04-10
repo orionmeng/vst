@@ -97,6 +97,7 @@ export default function LoadoutEditorPage({ params }: { params: { id: string } }
           onSelect={selectSkin}
           onClose={() => setActiveWeapon(null)}
           currentIconUrl={loadout[activeWeapon]?.imageUrl}
+          currentIconName={loadout[activeWeapon]?.name}
         />
       )}
 

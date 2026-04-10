@@ -13,6 +13,7 @@ interface SkinSelectModalProps {
   onSelect: (skin: SkinWithFlags) => void;
   onClose: () => void;
   currentIconUrl?: string | null;
+  currentIconName?: string | null;
 }
 
 export default function SkinSelectModal({
@@ -21,6 +22,7 @@ export default function SkinSelectModal({
   onSelect,
   onClose,
   currentIconUrl,
+  currentIconName,
 }: SkinSelectModalProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterCollection, setFilterCollection] = useState(false);
@@ -201,6 +203,9 @@ export default function SkinSelectModal({
                   <span className="text-sm text-gray-500">None</span>
                 )}
               </div>
+              {currentIconName && (
+                <p className="mt-1 text-xs text-gray-400 text-center truncate w-36">{currentIconName}</p>
+              )}
             </div>
           </div>
         </div>
