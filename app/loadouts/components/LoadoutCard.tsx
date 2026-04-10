@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -22,16 +23,10 @@ interface LoadoutCardProps {
 export default function LoadoutCard({ loadout, onDelete, onDownload, onExport, onSetIcon }: LoadoutCardProps) {
   const [showActions, setShowActions] = useState(false);
   const [imageError, setImageError] = useState(false);
-  
-  // Get icon or first skin image, ensuring we filter out empty strings and null values
+
   const iconUrl = loadout.icon && loadout.icon.trim() ? loadout.icon : null;
   const firstSkinImage = loadout.entries.find((e) => e.skin?.imageUrl)?.skin?.imageUrl || null;
   const displayImage = iconUrl || firstSkinImage;
-
-  // Reset imageError when displayImage changes
-  useEffect(() => {
-    setImageError(false);
-  }, [displayImage]);
 
   return (
     <div

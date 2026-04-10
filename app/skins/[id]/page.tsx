@@ -60,18 +60,20 @@ export default async function SkinPage({ params }: SkinPageProps) {
           {skin.name}
         </h1>
         <div className="flex items-center gap-4">
-          <p className="text-lg text-gray-400">{skin.weapon}</p>
-          {tierInfo.icon && (
-            <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-lg text-gray-400">
+            <span>{skin.weapon}</span>
+            {tierInfo.icon && (
               <img
                 src={tierInfo.icon}
                 alt={tierInfo.name}
                 title={tierInfo.name}
-                className="w-7 h-7"
+                className="w-5 h-5"
               />
-              <span className="text-sm text-gray-400">{tierInfo.name}</span>
-            </div>
-          )}
+            )}
+            {skin.cost > 0 && (
+              <span>{skin.cost.toLocaleString()} VP</span>
+            )}
+          </div>
         </div>
       </div>
 

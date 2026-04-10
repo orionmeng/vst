@@ -1,12 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import { Skin } from "@prisma/client";
 import Link from "next/link";
+import { getTierInfo } from "@/lib/tierIcons";
 
 interface SkinCardProps {
   skin: Skin;
 }
 
 export default function SkinCard({ skin }: SkinCardProps) {
+  const tierInfo = getTierInfo(skin.tier);
+
   return (
     <Link
       href={`/skins/${skin.id}`}
@@ -25,9 +28,20 @@ export default function SkinCard({ skin }: SkinCardProps) {
       </div>
 
       <h3 className="text-white font-semibold truncate">{skin.name}</h3>
-      <p className="text-sm text-gray-400">
-        {skin.weapon}
-      </p>
+      <div className="flex items-center gap-1.5 text-sm text-gray-400">
+        <span>{skin.weapon}</span>
+        {tierInfo.icon && (
+          <img
+            src={tierInfo.icon}
+            alt={tierInfo.name}
+            title={tierInfo.name}
+            className="w-4 h-4 inline-block"
+          />
+        )}
+        {skin.cost > 0 && (
+          <span>{skin.cost.toLocaleString()} VP</span>
+        )}
+      </div>
     </Link>
   );
 }

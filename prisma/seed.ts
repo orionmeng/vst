@@ -27,6 +27,15 @@ type SkinResponse = {
   }[];
 };
 
+// Valorant skin prices by content tier UUID
+const TIER_COSTS: Record<string, number> = {
+  "12683d76-48d7-84a3-4e09-6985794f0445": 875,   // Select
+  "0cebb8be-46d7-c12a-d306-e9907bfc5a25": 1275,  // Deluxe
+  "60bca009-4182-7998-dee7-b8a2558dc369": 1775,  // Premium
+  "e046854e-406c-37f4-6607-19a9ba8426fc": 2175,  // Exclusive
+  "411e4a55-4e59-7757-41f0-86a53f101bb5": 2475,  // Ultra
+};
+
 async function main() {
   console.log("Fetching weapons...");
 
@@ -63,17 +72,20 @@ async function main() {
 
     if (!imageUrl) continue;
 
+    const cost = TIER_COSTS[skin.contentTierUuid ?? ""] ?? 0;
+
     await prisma.skin.upsert({
       where: { id: skin.uuid },
       update: {
         levels: skin.levels as unknown as Prisma.InputJsonValue,
+        cost,
       },
       create: {
         id: skin.uuid,
         name: skin.displayName,
         weapon,
         tier: skin.contentTierUuid ?? "Unknown",
-        cost: 0,
+        cost,
         imageUrl,
         chromas: skin.chromas as unknown as Prisma.InputJsonValue,
         levels: skin.levels as unknown as Prisma.InputJsonValue,

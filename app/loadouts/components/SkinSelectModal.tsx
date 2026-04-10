@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -260,6 +261,11 @@ export default function SkinSelectModal({
                     <p className="mt-2 text-xs text-gray-300 text-center truncate group-hover:text-white">
                       {skin.name}
                     </p>
+                    {skin.cost > 0 && (
+                      <p className="text-xs text-gray-500 text-center">
+                        {skin.cost.toLocaleString()} VP
+                      </p>
+                    )}
                   </button>
                 ))}
               </div>

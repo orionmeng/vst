@@ -25,6 +25,8 @@ export async function GET(req: Request) {
       name: true,
       weapon: true,
       imageUrl: true,
+      cost: true,
+      tier: true,
     },
     orderBy: { name: "asc" },
     skip,

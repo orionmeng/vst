@@ -42,6 +42,7 @@ export type SkinWithFlags = {
   name: string;
   weapon: string;
   imageUrl: string | null;
+  cost: number;
   inCollection?: boolean;
   inWishlist?: boolean;
 };
@@ -51,5 +52,6 @@ export type BasicSkin = {
   name: string;
   weapon: string;
   imageUrl: string | null;
+  cost: number;
 };
 
