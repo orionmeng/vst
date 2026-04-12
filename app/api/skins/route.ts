@@ -7,6 +7,7 @@ export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const weapon = searchParams.get("weapon");
   const search = searchParams.get("search");
+  const tiers = searchParams.get("tiers");
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "20");
   const session = await getServerSession(authOptions);
@@ -18,6 +19,7 @@ export async function GET(req: Request) {
       AND: [
         weapon ? { weapon } : {},
         search ? { name: { contains: search, mode: "insensitive" } } : {},
+        tiers ? { tier: { in: tiers.split(",").filter(Boolean) } } : {},
       ],
     },
     select: {
@@ -28,7 +30,10 @@ export async function GET(req: Request) {
       cost: true,
       tier: true,
     },
-    orderBy: { name: "asc" },
+    orderBy: [
+      { cost: "desc" },
+      { name: "asc" },
+    ],
     skip,
     take: limit,
   });

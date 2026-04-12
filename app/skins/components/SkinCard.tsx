@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Skin } from "@prisma/client";
 import Link from "next/link";
-import { getTierInfo } from "@/lib/tierIcons";
+import { getTierInfo } from "@/lib/tiers";
 
 interface SkinCardProps {
   skin: Skin;

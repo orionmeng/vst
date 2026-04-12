@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 
 import { prisma } from "@/lib/prisma";
 import { authOptions } from "@/lib/auth";
-import { getTierInfo } from "@/lib/tierIcons";
+import { getTierInfo } from "@/lib/tiers";
 
 import SkinMedia from "./components/SkinMedia";
 

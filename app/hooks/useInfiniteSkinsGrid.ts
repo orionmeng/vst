@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { ITEMS_PER_PAGE, Skin } from "@/lib/constants";
@@ -10,29 +11,32 @@ export function useInfiniteSkinsGrid({ apiEndpoint }: UseInfiniteSkinsGridOption
   const searchParams = useSearchParams();
   const weapon = searchParams.get("weapon");
   const search = searchParams.get("search");
+  const tiers = searchParams.get("tiers");
 
   const [skins, setSkins] = useState<Skin[]>([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const observerTarget = useRef<HTMLDivElement>(null);
-  const prevFiltersRef = useRef({ weapon, search });
+  const prevFiltersRef = useRef({ weapon, search, tiers });
   const isInitialMount = useRef(true);
 
   // Load skins
   useEffect(() => {
     const filtersChanged = 
       prevFiltersRef.current.weapon !== weapon || 
-      prevFiltersRef.current.search !== search;
+      prevFiltersRef.current.search !== search ||
+      prevFiltersRef.current.tiers !== tiers;
 
     // If filters changed or initial mount, reset and fetch page 1
     if (filtersChanged || isInitialMount.current) {
       isInitialMount.current = false;
-      prevFiltersRef.current = { weapon, search };
+      prevFiltersRef.current = { weapon, search, tiers };
       
       const params = new URLSearchParams();
       if (weapon) params.set("weapon", weapon);
       if (search) params.set("search", search);
+      if (tiers) params.set("tiers", tiers);
       params.set("page", "1");
       params.set("limit", ITEMS_PER_PAGE.toString());
 
@@ -63,6 +67,7 @@ export function useInfiniteSkinsGrid({ apiEndpoint }: UseInfiniteSkinsGridOption
     const params = new URLSearchParams();
     if (weapon) params.set("weapon", weapon);
     if (search) params.set("search", search);
+    if (tiers) params.set("tiers", tiers);
     params.set("page", page.toString());
     params.set("limit", ITEMS_PER_PAGE.toString());
 
@@ -79,7 +84,7 @@ export function useInfiniteSkinsGrid({ apiEndpoint }: UseInfiniteSkinsGridOption
         console.error("Failed to load skins", err);
         setIsLoading(false);
       });
-  }, [page, weapon, search, apiEndpoint]);
+  }, [page, weapon, search, tiers, apiEndpoint]);
 
   // Intersection observer for infinite scroll
   const handleObserver = useCallback(
